@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas" width="640" height="480"></canvas>
+
+<script>
+    const myCanvas = document.getElementById('myCanvas');
+    const ctx = myCanvas.getContext('2d');
+
+    function drawCircle(x=0, y=0, r=10, color='black'){
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 2*Math.PI);
+        ctx.fillStyle = color;
+        ctx.fill();
+    }
+
+    for(let i=0; i<100; i++){
+        drawCircle(
+            myCanvas.width*Math.random(),
+            myCanvas.height*Math.random(),
+            5 + Math.floor(26*Math.random()),
+            `hsl(${Math.random()*360},100%,50%)`);
+    }
+
+
+
+
+</script>
+</body>
+</html>

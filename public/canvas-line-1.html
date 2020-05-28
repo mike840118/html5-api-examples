@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas</title>
+</head>
+<body>
+    <canvas id="myCanvas" width:"600" height="400"></canvas>
+</body>
+<script>
+    const myCanvas = document.querySelector('#myCanvas')
+    const cnt = myCanvas.getContext('2d');
+    cnt.beginPath()//重置位置
+    cnt.moveTo(50,50)//先移動到5050
+    cnt.lineTo(200,300)//畫線到200 300
+    cnt.lineTo(400,50)//從200 300畫線到400 50
+    cnt.strokeStyle = 'pink'//給線條顏色
+    cnt.lineWidth= 5 ; //設定畫筆粗細
+    cnt.stroke()//在路徑上畫線
+
+</script>
+</html>

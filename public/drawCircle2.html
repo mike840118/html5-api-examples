@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas" width="640" height="480"></canvas>
+
+<script>
+    const myCanvas = document.getElementById('myCanvas');
+    const ctx = myCanvas.getContext('2d');
+    const balls = [];
+
+    function drawCircle(x=0, y=0, r=10, color='black'){
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 2*Math.PI);
+        ctx.fillStyle = color;
+        ctx.fill();
+    }
+
+    for(let i=0; i<100; i++){
+        balls.push({
+            x: Math.floor(myCanvas.width*Math.random()),
+            y: Math.floor(myCanvas.height*Math.random()),
+            r: 5 + Math.floor(26*Math.random()),
+            c: `hsl(${Math.random()*360},100%,50%)`
+        });
+    }
+
+
+    function renderBalls(){
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height)
+        balls.forEach((el)=>{
+            drawCircle(el.x, el.y, el.r, el.c);
+        });
+    }
+    //renderBalls();
+
+    function moveBalls(){
+        balls.forEach((el)=>{
+            el.y --
+        });
+    }
+
+    function runBalls(){
+        moveBalls()
+        renderBalls();
+        setTimeout(runBalls, 30)
+    }
+    runBalls();
+
+</script>
+</body>
+</html>
