@@ -21,7 +21,7 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-require(__dirname + '/../routes/ws-echo')(server);
+require(__dirname + '/../routes/ws-chat')(server);
 /**
  * Listen on provided port, on all network interfaces.
  */

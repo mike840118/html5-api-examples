@@ -6,6 +6,7 @@ const createEchoServer = server=>{
         console.log(wsServer.clients.size);
         console.log('ip:', req.connection.remoteAddress);
         console.log('port:', req.connection.remotePort);
+        console.log('url:', req.url);
         ws.on('message', message=>{
             ws.send(message);
         })
@@ -14,3 +15,4 @@ const createEchoServer = server=>{
 };
 
 module.exports = createEchoServer;
+
