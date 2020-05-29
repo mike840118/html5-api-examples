@@ -6,7 +6,8 @@ var logger = require('morgan');
 var serveIndex = require('serve-index')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+// const axios = require('axios');
+const axios = require('axios');
 var app = express();
 
 // view engine setup
@@ -21,6 +22,35 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
+
+app.get('/try-sse',function(req,res){
+let id = 30
+res.writeHead(200, {
+  'Content-Type': 'text/event-stream',
+  'Cache-Control': 'no-cache',
+  'Connection': 'keep-alive',
+});
+setInterval(function(){
+  let now = new Date();
+  res.write('id :' + id++ + '\n');//send end會做完就直接斷線，而white不會
+  res.write('data :' + now.toLocaleString() + '\n\n');
+}, 2000)
+})
+app.get('/yahoo', (req, res)=>{
+  axios.get('https://tw.yahoo.com/')
+      .then(response=>{
+          console.log(response);
+          // res.send(response.data);
+        const $ = cheerio.load(response.data);
+        res.writeHead(200,{
+          'Content-Type': 'text/html'
+        })
+        $('img').each((i, el)=>{
+            res.write(`<img src="${el.attribs.src}"><br>`);
+        });
+        res.end('');
+      });
+});
 app.use('/', serveIndex('public', {'icons': true}));
 
 // catch 404 and forward to error handler

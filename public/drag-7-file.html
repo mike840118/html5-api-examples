@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #a8f1f1;
+        }
+        .ball {
+            width: 100px;
+            height: 100px;
+            background-color: #e768be;
+            border-radius: 50%;
+            left: 100px;
+            top:100px;
+            display: inline-block;
+            text-align: center;
+            line-height: 100px;
+        }
+        .rect2, .rect3 {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background-color: #51612b;
+            left: 50px;
+            top:50px;
+        }
+    </style>
+</head>
+<body>
+<div class="rect">
+    <div class="rect2" style="left:400px"></div>
+</div>
+<div class="container"></div>
+<script src="javascripts/jquery-3.5.1.js"></script>
+<script>
+    const rect2 = $('.rect2');
+    const container = $('.container');
+    rect2.on('dragover', function(event){
+        event.preventDefault();
+    });
+
+    const readerLoaded = event=>{
+        const img = new Image();
+        img.height = 150;
+        img.src = event.target.result;
+        container.append(img);
+    };
+
+    rect2.on('drop', function(event){
+        event.preventDefault();
+        console.log(event.originalEvent.dataTransfer.files);
+        const fList = event.originalEvent.dataTransfer.files;
+
+        let file, reader;
+        for(let i=0; i<fList.length; i++){
+            const file = fList[i];
+
+            if(file.type.indexOf('image')===0){
+                reader = new FileReader();
+                reader.addEventListener('load', readerLoaded);
+                reader.readAsDataURL(file)
+            }
+        }
+    });
+
+</script>
+
+
+</body>
+</html>

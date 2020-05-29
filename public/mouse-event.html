@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #a8f1f1;
+        }
+        .ball {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #b15693;
+            border-radius: 50%;
+            left: 100px;
+            top:100px;
+        }
+        .rect2 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #51612b;
+            left: 100px;
+            top:300px;
+        }
+    </style>
+</head>
+<body>
+<div class="rect">
+    <div class="ball" draggable="true"></div>
+    <div class="rect2"></div>
+</div>
+
+<script src="javascripts/jquery-3.4.1.js"></script>
+
+<script>
+    const ball = $('.ball')
+    const rect2 = $('.rect2')
+    ball.on('mousedown',function(event){
+        console.log(event);
+        console.log(event.originalEvent.currentTarget);
+
+    });
+</script>
+</body>
+</html>
