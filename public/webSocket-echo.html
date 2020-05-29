@@ -2,56 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Title</title>
 </head>
 <body>
-    
-        <button id="connectBtn">Connect </button>
-        <button id="diconnectBtn">Diconnect </button>
-        <br>
-        <input type="text" id="myInput">
-        <button id="sendBtn">送出</button>
-        <br>
-        <div id="info"></div>
-        
-        <script>
-            let socket;
-            const socketHandler = (event)=>{
-                console.log(event.type);
-                switch(event.type){
-                    case 'open':
-                        info.innerText +=`--- 已連線 ---<br>`;
-                        console.log(socket.binaryType);
-                        break;
-                        case 'message':
-                            info.innerText += `message : ${event.data}\n`;
-                            break;
-                        case 'close':
-                            info.innerText += `--- 連線已關閉 ---\n\n`;
-                            break;
-                }
-            }
-            document.addEventListener('click', function(event){
-                console.log(event.target.id)
-                switch (event.target.id) {
-                    case 'connectBtn':
-                    if(socket && socket.readyState===WebSocket.OPEN) return;
-                    socket = new WebSocket('ws://echo.websocket.org');
-                    socket.addEventListener('open',socketHandler);
-                    socket.addEventListener('message',socketHandler);
-                    socket.addEventListener('close',socketHandler);
-                    break;
-                    case 'diconnectBtn': 
-                    if(socket && socket.readyState===WebSocket.OPEN)
+<button id="connectBtn">Connect </button>
+<button id="diconnectBtn">Diconnect </button>
+<br>
+<input type="text" id="myInput">
+<button id="sendBtn">送出</button>
+<br>
+<div id="info"></div>
+
+
+<script>
+    let socket;
+
+    const socketHandler = (event)=>{
+        console.log(event.type);
+        switch(event.type){
+            case 'open':
+                info.innerText += `--- 已連線 ---\n\n`;
+                console.log(socket.binaryType);
+                break;
+            case 'message':
+                info.innerText += `message: ${event.data} \n`;
+                break;
+            case 'close':
+                info.innerText += `--- 連線已關閉 ---\n\n`;
+                break;
+        }
+
+    };
+
+    document.addEventListener('click', function(event){
+        console.log(event.target.id)
+        switch(event.target.id){
+            case 'connectBtn':
+                if(socket && socket.readyState===WebSocket.OPEN)
+                    return;
+                socket = new WebSocket('ws://localhost:3000/小明');
+                socket.addEventListener('open', socketHandler);
+                socket.addEventListener('message', socketHandler);
+                socket.addEventListener('close', socketHandler);
+                break;
+            case 'diconnectBtn':
+                if(socket && socket.readyState===WebSocket.OPEN)
                     socket.close();
-                    break;
-                    case 'sendBtn':
-                        if(socket && socket.readyState===WebSocket.OPEN)
-                        socket.send(myInput.value);
-                    break;
-                }
-            });
-        </script>
+                break;
+            case 'sendBtn':
+                if(socket && socket.readyState===WebSocket.OPEN)
+                    socket.send(myInput.value);
+                break;
+        }
+    });
+
+
+
+
+
+</script>
+
 </body>
 </html>
