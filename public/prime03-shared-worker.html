@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="calPrime()">get prime numbers</button>
+<input type="text">
+<div id="info"></div>
+<script>
+  const sw = new SharedWorker('js/shared-worker-prime-number.js');
+  sw.port.onmessage = event=>{
+      let {primeNumbers , runningTime} = event.data;
+      info.innerText = `${primeNumbers.length}個, 花費時間 ${runningTime} msec`;
+  }
+  sw.port.postMessage('Hello');
+</script>
+</body>
+</html>

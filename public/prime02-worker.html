@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="calPrime()">get prime numbers</button>
+<input type="text">
+<div id="info"></div>
+<script>
+    let worker;
+
+    function calPrime() {
+        if(! worker){
+            worker = new Worker('js/dedicated-worker-prime-numbers.js');
+            worker.onmessage = event=>{
+                let {length, howLong} = event.data;
+                info.innerText = `${length}個, 花費時間 ${howLong} msec`;
+            }
+        }
+
+        worker.postMessage('start');
+    }
+</script>
+</body>
+</html>

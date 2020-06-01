@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas</title>
+    <style>
+        canvas{
+            border:1px dashed green;
+            color:transparent
+        }
+    </style>
+    <link rel="manifest" href="./manifest.json">
+</head>
+<body>
+    <canvas id="myCanvas" width="600" height="400"></canvas>
+    <div id="info"></div>
+    <br>
+<input type="color" id="pColor" value="#0000FF">
+<input type="number" min="1" max="50" step="1" id="pSize" value="5"> -
+<button onclick="clearCanvas()">清空重置</button> -
+<button onclick="saveCanvas()">儲存</button>
+</body>
+<script>
+  const myCanvas = document.querySelector('#myCanvas')
+    const ctx = myCanvas.getContext('2d');
+    
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+    const mDown = event=>{
+        // console.log('mDown')
+        ctx.beginPath();
+        ctx.moveTo(event.offsetX,event.offsetY)
+        myCanvas.addEventListener('mousemove', mMove);
+        window.addEventListener('mouseup', mUp);
+    };
+    const mUp = event=>{
+        // console.log('mup')
+        myCanvas.removeEventListener('mousemove', mMove);
+        window.removeEventListener('mouseup', mUp);
+    };
+   const mMove = event=>{
+        // console.log(event)
+        ctx.lineTo(event.offsetX,event.offsetY)
+        ctx.stroke()
+        info.innerText = `${event.offsetX},${event.offsetY}`
+   };
+   // 設置畫筆大小顏色
+	const setPen = ()=>{
+		ctx.strokeStyle = pColor.value;
+		ctx.lineWidth = pSize.value;
+	};
+	pColor.addEventListener('change', setPen);
+	pSize.addEventListener('change', setPen);
+	setPen();
+
+	const clearCanvas = ()=>{
+	    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+	};
+    const saveCanvas = ()=>{
+        const image = myCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+		// location.href = image;
+
+		let a = document.createElement('a');
+		a.setAttribute('download', 'draw.png');
+		a.setAttribute('href', image);
+		a.click();
+    };
+   
+   myCanvas.addEventListener('mousedown', mDown);
+</script>
+</html>
